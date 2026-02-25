@@ -1,0 +1,16 @@
+FROM brew
+ARG UID=1000
+ARG GID=1000
+ARG USER=app
+ENV UID=$UID
+ENV GID=$GID
+ENV USER=$USER
+
+SHELL ["/bin/bash", "--login" , "-c"]
+RUN brew install nodeenv
+USER $USER
+RUN nodeenv --node=24.13.1 --npm=v11.8.0 /home/node/nodeenv
+
+ENV PATH="/home/node/nodeenv/bin:$PATH"
+ENTRYPOINT ["bash"]
+

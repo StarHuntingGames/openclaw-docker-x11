@@ -1,0 +1,27 @@
+FROM x11docker/xfce
+ARG UID=1000
+ARG GID=1000
+ARG USER=app
+ENV UID=$UID
+ENV GID=$GID
+ENV USER=$USER
+
+RUN groupadd -r -g $GID $USER
+RUN useradd -r -m -u $UID -g $GID -s /bin/bash $USER
+RUN apt-get update && apt-get install -y sudo build-essential procps curl wget file git linux-headers-generic make g++
+RUN echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN mkdir /home/node && chown -R $UID:$GID /home/node
+
+RUN wget 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+USER $USER
+RUN cd /home/$USER; chmod +x install.sh; export NONINTERACTIVE=1
+RUN bash ./install.sh
+RUN echo >> /home/$USER/.bashrc
+RUN echo >> /home/$USER/.profile
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/$USER/.bashrc
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv sh)"' >> /home/$USER/.profile
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)" && brew update && brew install gcc cmake
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv sh)" && brew update && brew install gcc cmake
+
+
+
