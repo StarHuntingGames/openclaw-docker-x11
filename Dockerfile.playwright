@@ -7,7 +7,7 @@ ENV GID=$GID
 ENV USER=$USER
 
 USER root
-RUN apt-get update -y && apt-get install -y openssh-server vim net-tools firefox-esr libxss-dev libnss3-dev libnspr4-dev
+RUN apt-get update -y && apt-get install -y openssh-server vim net-tools firefox-esr libxss-dev libnss3-dev libnspr4-dev chromium
 RUN ssh-keygen -A && /etc/init.d/ssh restart
 RUN sed -i 's/\#AllowAgentForwarding/AllowAgentForwarding/g' /etc/ssh/sshd_config
 RUN sed -i 's/\#AllowTcpForwarding/AllowTcpForwarding/g' /etc/ssh/sshd_config

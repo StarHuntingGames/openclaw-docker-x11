@@ -1,4 +1,5 @@
 VERSION = 2026.2.24
+USER = app
 
 .DEFAULT_GOAL := onboard
 .PHONY: onboard
@@ -51,8 +52,21 @@ chrome:
 	docker exec -it openclaw-gateway openclaw config set browser.defaultProfile "openclaw"
 	docker exec -it openclaw-gateway openclaw browser --browser-profile openclaw start
 
+chromium:
+	docker exec -it openclaw-gateway chromium --user-data-dir=/data/personas/Default/chrome_profile --profile-directory=Default --disable-gpu --disable-features=dbus --disable-dev-shm-usage --start-maximized --no-sandbox --disable-setuid-sandbox --no-zygote --disable-sync --no-first-run
+
+playwright:
+	docker exec -it openclaw-gateway /home/$(USER)/.venv/bin/playwright open https://www.google.com/?`docker exec -it openclaw-gateway grep token /home/$(USER)/.openclaw/openclaw.json|grep -v mode | cut -d '"' -f 4`
+
+extension:
+	docker exec -it openclaw-gateway openclaw browser extension install
+
+token:
+	docker exec -it openclaw-gateway grep token /home/$(USER)/.openclaw/openclaw.json|grep -v mode | cut -d '"' -f 4
+
 openclaw:
 	docker exec -it openclaw-gateway openclaw
+
 
 
 

@@ -11,7 +11,19 @@ services:
       UID: $GID
       GID: $GID
       USER: $USER
+      CHROME_USER_DATA_DIR: /data/personas/Default/chrome_profile
+      DISPLAY: novnc:0.0
     volumes:
       - ./config/openclaw:/home/app/.openclaw
       - ./config/openclaw:/home/$USER/.openclaw
+      - ./data/personas/Default:/data/personas/Default
     restart: unless-stopped
+  novnc:
+    image: theasp/novnc:latest
+    environment:
+      - DISPLAY_WIDTH=1920
+      - DISPLAY_HEIGHT=1080
+      - RUN_XTERM=false
+      - RUN_FLUXBOX=yes
+    ports:
+      - "8080:8080"
