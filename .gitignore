@@ -1,2 +1,10 @@
 /config/openclaw/
 /.idea/
+/config/openclaw/workspace/AGENTS.md
+/config/openclaw/workspace/BOOTSTRAP.md
+/config/openclaw/workspace/HEARTBEAT.md
+/config/openclaw/workspace/IDENTITY.md
+/config/openclaw/workspace/SOUL.md
+/config/openclaw/workspace/TOOLS.md
+/config/openclaw/workspace/USER.md
+/config/openclaw/workspace/.openclaw/workspace-state.json

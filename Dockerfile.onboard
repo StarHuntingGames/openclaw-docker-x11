@@ -1,4 +1,4 @@
-FROM openclaw
+FROM playwright
 ARG UID=1000
 ARG GID=1000
 ARG USER=app

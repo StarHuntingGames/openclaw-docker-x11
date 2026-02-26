@@ -10,7 +10,9 @@ SHELL ["/bin/bash", "--login" , "-c"]
 RUN brew install nodeenv
 USER $USER
 RUN nodeenv --node=24.13.1 --npm=v11.8.0 /home/node/nodeenv
+RUN echo "export PATH=/home/node/bin:/home/node/nodeenv/bin:$PATH" >> /home/$USER/.bashrc
+RUN echo "export PATH=/home/node/bin:/home/node/nodeenv/bin:$PATH" >> /home/$USER/.profile
 
-ENV PATH="/home/node/nodeenv/bin:$PATH"
+ENV PATH="/home/node/bin:/home/node/nodeenv/bin:$PATH"
 ENTRYPOINT ["bash"]
 

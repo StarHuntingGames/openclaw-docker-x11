@@ -11,7 +11,7 @@ ENV VERSION=$VERSION
 USER $USER
 RUN cd /home/node && . ./nodeenv/bin/activate && npm config set prefix /home/node && npm install -g openclaw@$VERSION
 
-ENV PATH="/home/node/nodeenv/bin:$PATH"
+#ENV PATH="/home/node/nodeenv/bin:$PATH"
 ENTRYPOINT ["/home/node/nodeenv/bin/openclaw"]
 
 

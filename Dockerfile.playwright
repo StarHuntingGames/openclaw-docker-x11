@@ -1,0 +1,37 @@
+FROM openclaw
+ARG UID=1000
+ARG GID=1000
+ARG USER=app
+ENV UID=$UID
+ENV GID=$GID
+ENV USER=$USER
+
+USER root
+RUN apt-get update -y && apt-get install -y openssh-server vim net-tools firefox-esr libxss-dev libnss3-dev libnspr4-dev
+RUN ssh-keygen -A && /etc/init.d/ssh restart
+RUN sed -i 's/\#AllowAgentForwarding/AllowAgentForwarding/g' /etc/ssh/sshd_config
+RUN sed -i 's/\#AllowTcpForwarding/AllowTcpForwarding/g' /etc/ssh/sshd_config
+RUN sed -i 's/\#X11DisplayOffset/X11DisplayOffset/g' /etc/ssh/sshd_config
+RUN sed -i 's/\#X11UseLocalhost/X11UseLocalhost/g' /etc/ssh/sshd_config
+RUN /etc/init.d/ssh restart
+#RUN echo "export PATH=/home/node/bin:/home/node/nodeenv/bin:$PATH" >> /home/$USER/.bashrc
+#RUN echo "export PATH=/home/node/bin:/home/node/nodeenv/bin:$PATH" >> /home/$USER/.profile
+#RUN echo "export PATH=/home/$USER/.venv/bin/:$PATH" >> /home/$USER/.profile
+RUN echo "export PATH=/home/$USER/.venv/bin/:/home/node/bin:/home/node/nodeenv/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /home/$USER/.bashrc
+RUN echo "export PATH=/home/$USER/.venv/bin/:/home/node/bin:/home/node/nodeenv/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /home/$USER/.profile
+
+USER $USER
+#ENV PATH="/home/$USER/.venv/bin:/home/node/bin:/home/node/nodeenv/bin:$PATH"
+RUN npm install -g @playwright/cli@latest
+RUN /home/node/lib/node_modules/@playwright/cli/node_modules/playwright/cli.js install chromium
+RUN cd /home/$USER && python3 -m venv .venv && ./.venv/bin/python -m pip install --upgrade pip
+RUN /home/$USER/.venv/bin/python -m pip install --upgrade --ignore-installed playwright
+RUN /home/$USER/.venv/bin/playwright install --with-deps chromium
+RUN npx playwright install chrome
+#RUN openclaw config set browser.executablePath "/home/$USER/.venv/bin/playwright"
+RUN openclaw config set browser.executablePath "/usr/bin/google-chrome"
+
+### https://docs.openclaw.ai/tools/browser-linux-troubleshooting ###
+
+
+ENTRYPOINT ["/home/node/nodeenv/bin/openclaw", "onboard"]
