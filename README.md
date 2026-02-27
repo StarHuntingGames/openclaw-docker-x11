@@ -26,5 +26,10 @@ you can run `make devices` to list all the pending approvals.
 Then you can run `make approve` to approve the lastest pending approval.
 ---
 Run `make chrome` to setup chrome for openclaw, you need to restart the docker compose
+---
+Run `make chromium` to open a chromium in the [novnc (http://localhost:8080/vnc.html)](http://localhost:8080/vnc.html) window
+---
+Run `make claude` to open a claude
+---
 
 

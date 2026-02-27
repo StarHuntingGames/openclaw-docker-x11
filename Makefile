@@ -71,6 +71,9 @@ token:
 openclaw:
 	docker exec -it openclaw-gateway openclaw
 
+claude:
+	docker exec -it openclaw-gateway tmux -c "cd /workspace; claude --chrome"
+
 
 
 
