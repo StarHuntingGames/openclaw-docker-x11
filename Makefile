@@ -14,7 +14,10 @@ build-nodejs: build-brew
 build-openclaw: build-nodejs
 	docker build --build-arg VERSION=$(VERSION) -t openclaw -f Dockerfile.openclaw .
 
-build-playwright: build-openclaw
+build-claude: build-openclaw
+	docker build --build-arg VERSION=$(VERSION) -t claude -f Dockerfile.claude .
+
+build-playwright: build-claude
 	docker build --build-arg VERSION=$(VERSION) -t playwright -f Dockerfile.playwright .
 
 build-onboard: build-playwright
@@ -45,6 +48,7 @@ approve:
 	docker exec -it openclaw-gateway openclaw devices approve --latest
 
 chrome:
+	docker exec -it openclaw-gateway openclaw config set agents.defaults.sandbox.browser.allowHostControl true
 	docker exec -it openclaw-gateway openclaw config set browser.executablePath "/usr/bin/google-chrome"
 	docker exec -it openclaw-gateway openclaw config set browser.enabled  true
 	docker exec -it openclaw-gateway openclaw config set browser.headless true

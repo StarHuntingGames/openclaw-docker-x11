@@ -1,0 +1,15 @@
+FROM openclaw
+ARG UID=1000
+ARG GID=1000
+ARG USER=app
+ENV UID=$UID
+ENV GID=$GID
+ENV USER=$USER
+
+USER $USER
+RUN sudo apt-get install -y tmux screen
+RUN npm install -g @anthropic-ai/claude-code
+#RUN claude install
+
+
+ENTRYPOINT ["/home/node/nodeenv/bin/openclaw", "onboard"]
