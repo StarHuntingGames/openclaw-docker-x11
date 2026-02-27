@@ -19,6 +19,8 @@ RUN /etc/init.d/ssh restart
 #RUN echo "export PATH=/home/$USER/.venv/bin/:$PATH" >> /home/$USER/.profile
 RUN echo "export PATH=/home/$USER/.local/bin:/home/$USER/.venv/bin/:/home/node/bin:/home/node/nodeenv/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /home/$USER/.bashrc
 RUN echo "export PATH=/home/$USER/.local/bin:/home/$USER/.venv/bin/:/home/node/bin:/home/node/nodeenv/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /home/$USER/.profile
+RUN cp /home/$USER/.bashrc /home/.bashrc
+RUN cp /home/$USER/.profile /home/.profile
 
 USER $USER
 #ENV PATH="/home/$USER/.venv/bin:/home/node/bin:/home/node/nodeenv/bin:$PATH"
