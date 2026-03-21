@@ -47,9 +47,6 @@ devices:
 approve:
 	docker exec -it openclaw-gateway openclaw devices approve --latest
 
-chrome:
-	docker exec -it openclaw-gateway google-chrome --user-data-dir=/home/app/.config/google-chrome --disable-gpu --disable-features=dbus --disable-dev-shm-usage --start-maximized --no-sandbox --disable-setuid-sandbox --no-zygote --disable-sync --no-first-run
-
 setup-chrome:
 	docker exec -it openclaw-gateway openclaw config set agents.defaults.sandbox.browser.allowHostControl true
 	docker exec -it openclaw-gateway openclaw config set browser.executablePath "/usr/bin/google-chrome"
@@ -60,6 +57,11 @@ setup-chrome:
 #	docker exec -it openclaw-gateway openclaw config set browser.profiles.user.color "#00AA00"
 #	docker exec -it openclaw-gateway openclaw config set browser.profiles.user.driver "existing-session"
 	docker exec -it openclaw-gateway openclaw config set browser.defaultProfile "user"
+
+chrome:
+	docker exec -it openclaw-gateway google-chrome --user-data-dir=/home/app/.config/google-chrome --disable-gpu --disable-features=dbus --disable-dev-shm-usage --start-maximized --no-sandbox --disable-setuid-sandbox --no-zygote --disable-sync --no-first-run
+
+browser:
 	docker exec -it openclaw-gateway openclaw browser --browser-profile user start
 
 chromium:
