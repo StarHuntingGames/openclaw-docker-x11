@@ -1,4 +1,4 @@
-VERSION = 2026.3.13
+VERSION = 2026.4.12
 USER = app
 
 .DEFAULT_GOAL := onboard
@@ -57,6 +57,7 @@ setup-chrome:
 #	docker exec -it openclaw-gateway openclaw config set browser.profiles.user.color "#00AA00"
 #	docker exec -it openclaw-gateway openclaw config set browser.profiles.user.driver "existing-session"
 	docker exec -it openclaw-gateway openclaw config set browser.defaultProfile "user"
+	docker exec -it openclaw-gateway openclaw config set browser.ssrfPolicy.dangerouslyAllowPrivateNetwork true
 
 chrome:
 	docker exec -it openclaw-gateway google-chrome --user-data-dir=/home/app/.config/google-chrome --disable-gpu --disable-features=dbus --disable-dev-shm-usage --start-maximized --no-sandbox --disable-setuid-sandbox --no-zygote --disable-sync --no-first-run
